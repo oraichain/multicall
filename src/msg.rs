@@ -1,4 +1,4 @@
-use cosmwasm_schema::cw_serde;
+use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::{Addr, Binary};
 
 #[cw_serde]
@@ -11,28 +11,32 @@ pub struct MigrateMsg {}
 pub enum ExecuteMsg {}
 
 #[cw_serde]
+#[derive(QueryResponses)]
 pub enum QueryMsg {
+    #[returns(cw2::ContractVersion)]
     ContractVersion {},
-    Aggregate {
-        queries: Vec<Call>,
-    },
+    #[returns(AggregateResult)]
+    Aggregate { queries: Vec<Call> },
+    #[returns(AggregateResult)]
     TryAggregate {
         require_success: Option<bool>,
         include_cause: Option<bool>,
         queries: Vec<Call>,
     },
+    #[returns(AggregateResult)]
     TryAggregateOptional {
         include_cause: Option<bool>,
         queries: Vec<CallOptional>,
     },
-    BlockAggregate {
-        queries: Vec<Call>,
-    },
+    #[returns(BlockAggregateResult)]
+    BlockAggregate { queries: Vec<Call> },
+    #[returns(BlockAggregateResult)]
     BlockTryAggregate {
         require_success: Option<bool>,
         include_cause: Option<bool>,
         queries: Vec<Call>,
     },
+    #[returns(BlockAggregateResult)]
     BlockTryAggregateOptional {
         include_cause: Option<bool>,
         queries: Vec<CallOptional>,
