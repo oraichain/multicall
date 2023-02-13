@@ -1,0 +1,47 @@
+[package]
+name = "multicall"
+version = "0.1.0"
+authors = ["Oraichain Labs"]
+edition = "2021"
+repository = "https://github.com/oraichain/multicall"
+description = "On-chain query aggregator/batcher in Oraichain"
+
+exclude = [
+  # Those files are rust-optimizer artifacts. You might want to commit them for convenience but they should not be part of the source code publication.
+  "contract.wasm",
+  "hash.txt",
+]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+opt-level = 3
+debug = false
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+panic = 'abort'
+incremental = false
+overflow-checks = true
+
+[features]
+# for more explicit tests, cargo test --features=backtraces
+backtraces = ["cosmwasm-std/backtraces"]
+# use library feature to disable all instantiate/execute/query exports
+library = []
+
+[dependencies]
+cosmwasm-std = "1.1.9"
+cosmwasm-schema = "1.1.9"
+cw2 = "1.0.1"
+thiserror = { version = "1.0.26" }
+
+[dev-dependencies]
+cosmwasm-vm = { version = "1.0.0" }
+rand = "0.8.3"
+base64 = "0.13.0"
+test-case = "2.0.0"
