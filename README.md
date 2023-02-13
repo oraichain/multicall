@@ -1,22 +1,15 @@
 # Multicall
 
-On-chain query aggregator/batcher in Terra.
+On-chain query aggregator/batcher in Oraichain.
 
-<img width="831" alt="Artboard_12x" src="https://user-images.githubusercontent.com/921194/159640734-c8f8a529-6848-4f75-bf3d-71c9d44eab21.png">
+## Build contract
 
-----
+```bash
+cosmwasm-tools build multicontract
 
-Mainnet (Phoenix) Code Id: `381`
-
-Mainnet Address: [`terra1g5puatcgawc58d95rflj9sxrl8wsted6n66yp6pndy69rc40k39snsefs3`](https://terrasco.pe/mainnet/address/terra1g5puatcgawc58d95rflj9sxrl8wsted6n66yp6pndy69rc40k39snsefs3)
-
-Testnet (Pisco) Code Id: `3616`
-
-Testnet Address: [`terra1s2crcfhahev6dclcv6wyeg3sd0c5nj3jrtv40nf0wpey6elk6pvqt2r562`](https://finder.terra.money/testnet/address/terra1s2crcfhahev6dclcv6wyeg3sd0c5nj3jrtv40nf0wpey6elk6pvqt2r562)
-
-Classic (Columbus) Code Id: `3758`
-
-Classic Address: [`terra1y60jx2jqh5qpmcnvgz3n0zg2p6ky4mr6ax2qa5`](https://finder.terra.money/classic/address/terra1y60jx2jqh5qpmcnvgz3n0zg2p6ky4mr6ax2qa5)
+# gen ts
+cosmwasm-tools gen-ts --input multicontract --output build
+```
 
 ## Example Usage
 
@@ -40,9 +33,9 @@ const multicallRes: any = await terra.wasm.contractQuery(multicall, {
       },
     ],
   },
-})
+});
 
-console.log(multicallRes)
+console.log(multicallRes);
 
 // ---
 {
@@ -55,20 +48,17 @@ console.log(multicallRes)
       success: true,
       data: "eyJleGNoYWnZV9yYXRlIjoiMS4yMzE0NTYyNzU4MjA1MDYwMDQiLC.....",
     },
-  ]
+  ];
 }
 // ---
 
 const decoded = multicallRes.return_data.map((e) => {
-  return JSON.parse(Buffer.from(e.data, "base64").toString())
-})
+  return JSON.parse(Buffer.from(e.data, "base64").toString());
+});
 
+console.log(decoded)[
+  // ---
 
-console.log(decoded)
-
-// ---
-
-[
   ({
     owner_addr: "terra16ckeuu7c6ggu52a8se005mg5c0kd2kmuun63cu",
     aterra_contract: "terra1ajt556dpzvjwl0kl5tzku3fc3p3knkg9mkv8jl",
@@ -84,7 +74,7 @@ console.log(decoded)
     exchange_rate: "1.231456275820506004",
     aterra_supply: "146558727243845",
   })
-]
+];
 ```
 
 #### Try Aggregate
@@ -109,13 +99,13 @@ const multicallRes: any = await terra.wasm.contractQuery(multicall, {
       },
     ],
   },
-})
+});
 
 const decoded = multicallRes.return_data.map((e) => {
   return e.length == 0
     ? null
-    : JSON.parse(Buffer.from(e.data, "base64").toString())
-})
+    : JSON.parse(Buffer.from(e.data, "base64").toString());
+});
 ```
 
 #### Try Aggregate With Optional Require Success
